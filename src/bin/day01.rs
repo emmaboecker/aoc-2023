@@ -2,7 +2,7 @@ const WRITTEN_NUMBERS: [&str; 9] = [
     "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 ];
 
-fn main() {
+pub fn main() {
     let input = include_str!("../../input/day01.txt");
     println!("Part 1: {}", find_numbers(input, false));
     println!("Part 2: {}", find_numbers(input, true));
@@ -36,8 +36,7 @@ fn find_valid(input: &str, written: bool) -> Vec<u32> {
     }
 
     for value in 1..10 {
-        let string_value = value.to_string();
-        let indices = input.match_indices(&string_value);
+        let indices = input.match_indices((value as u8 + b'0') as char);
 
         for (index, _) in indices {
             valid.push((index, value));
