@@ -12,10 +12,13 @@ macro_rules! create_and_write {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Read command line argument for the day and parse it into a number leading zeros
-    let day = format!("{:02}", std::env::args()
-        .nth(1)
-        .ok_or("Missing arguments")?
-        .parse::<u8>()?);
+    let day = format!(
+        "{:02}",
+        std::env::args()
+            .nth(1)
+            .ok_or("Missing arguments")?
+            .parse::<u8>()?
+    );
 
     // Create the file if it doesn't exist
     create_and_write!("input/day{day}.txt", "")?;

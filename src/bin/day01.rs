@@ -1,42 +1,43 @@
 use std::collections::HashMap;
 
 fn main() {
-    let mut input = include_str!("../../input/day01.txt").to_owned();
+    let input = include_str!("../../input/day01.txt");
 
-    // println!("{}", find_numbers(&input));
+    println!("Part 1: {}", find_numbers(input, false));
 
-    println!("{}", find_numbers(&input, true));
+    println!("Part 2: {}", find_numbers(input, true));
 }
 
 fn find_numbers(input: &str, written: bool) -> u32 {
-    let output = input.lines().map(|line| {
-        let line = line.to_owned();
-        println!("{}", line);
+    let output = input
+        .lines()
+        .map(|line| {
+            let valid = find_valid(line, written);
+            format!("{}{}", valid.first().unwrap(), valid.last().unwrap())
+        })
+        .collect::<Vec<String>>();
 
-        let valid = find_valid(&line, written);
-
-        println!("{:?}", valid);
-
-        format!("{}{}", valid.first().unwrap(), valid.last().unwrap())
-    }).collect::<Vec<String>>();
-
-    output.iter().map(|string| string.parse::<u32>().unwrap()).sum::<u32>()
+    output
+        .iter()
+        .map(|string| string.parse::<u32>().unwrap())
+        .sum::<u32>()
 }
 
 fn find_valid(input: &str, written: bool) -> Vec<u32> {
     let mut valid = vec![];
 
     if written {
-        let mut written_numbers = HashMap::new();
-        written_numbers.insert("one", 1);
-        written_numbers.insert("two", 2);
-        written_numbers.insert("three", 3);
-        written_numbers.insert("four", 4);
-        written_numbers.insert("five", 5);
-        written_numbers.insert("six", 6);
-        written_numbers.insert("seven", 7);
-        written_numbers.insert("eight", 8);
-        written_numbers.insert("nine", 9);
+        let written_numbers = HashMap::from([
+            ("one", 1),
+            ("two", 2),
+            ("three", 3),
+            ("four", 4),
+            ("five", 5),
+            ("six", 6),
+            ("seven", 7),
+            ("eight", 8),
+            ("nine", 9),
+        ]);
 
         for (written, value) in written_numbers {
             let indices = input.match_indices(written);
@@ -57,5 +58,8 @@ fn find_valid(input: &str, written: bool) -> Vec<u32> {
     }
 
     valid.sort_by(|a, b| a.0.cmp(&b.0));
-    valid.into_iter().map(|(_, value)| value).collect::<Vec<u32>>()
+    valid
+        .into_iter()
+        .map(|(_, value)| value)
+        .collect::<Vec<u32>>()
 }
