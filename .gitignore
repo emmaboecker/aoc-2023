@@ -1,3 +1,5 @@
 /target
 /input
 .idea
+flamegraph.svg
+output.txt
