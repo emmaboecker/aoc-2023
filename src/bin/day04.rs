@@ -42,10 +42,10 @@ pub fn main() {
 }
 
 trait FindMatches {
-    fn find_matches(&self, winning_numbers: &Vec<u32>) -> usize;
+    fn find_matches(&self, winning_numbers: &[u32]) -> usize;
 }
 impl FindMatches for Vec<u32> {
-    fn find_matches(&self, winning_numbers: &Vec<u32>) -> usize {
+    fn find_matches(&self, winning_numbers: &[u32]) -> usize {
         let matches = self.iter().filter(|number| {
             winning_numbers.contains(number)
         }).count();
