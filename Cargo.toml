@@ -26,5 +26,6 @@ harness = false
 name = "day04"
 harness = false
 
-[profile.release]
-debug = true
+[[bench]]
+name = "day05"
+harness = false
