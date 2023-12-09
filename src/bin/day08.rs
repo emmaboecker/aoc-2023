@@ -6,17 +6,20 @@ pub fn main() {
 
     let instructions = input.next().unwrap().chars();
 
-    let nodes = input.skip(1).map(|line| {
-        let (name, links) = line.split_once(" = ").unwrap();
-        let (left, right) = links.split_once(", ").unwrap();
-        let left = left.strip_prefix("(").unwrap();
-        let right = right.strip_suffix(")").unwrap();
+    let nodes = input
+        .skip(1)
+        .map(|line| {
+            let (name, links) = line.split_once(" = ").unwrap();
+            let (left, right) = links.split_once(", ").unwrap();
+            let left = left.strip_prefix("(").unwrap();
+            let right = right.strip_suffix(")").unwrap();
 
-        (name, left, right)
-    }).fold(HashMap::new(), |mut nodes, (name, left, right)| {
-        nodes.insert(name, (left, right));
-        nodes
-    });
+            (name, left, right)
+        })
+        .fold(HashMap::new(), |mut nodes, (name, left, right)| {
+            nodes.insert(name, (left, right));
+            nodes
+        });
 
     let mut current_node = nodes["AAA"];
     let mut steps: u32 = 0;
@@ -27,12 +30,12 @@ pub fn main() {
                 let right = current_node.1;
                 current_node = nodes[right];
                 right
-            },
+            }
             'L' => {
                 let left = current_node.0;
                 current_node = nodes[left];
                 left
-            },
+            }
             _ => unreachable!("Invalid instruction"),
         };
 
@@ -44,10 +47,14 @@ pub fn main() {
         }
     }
 
-    let mut current_nodes = nodes.iter().filter(|(name, _)| name.ends_with('A')).map(|(name, _)| *name).collect::<Vec<_>>();
+    let mut current_nodes = nodes
+        .iter()
+        .filter(|(name, _)| name.ends_with('A'))
+        .map(|(name, _)| *name)
+        .collect::<Vec<_>>();
 
     let mut first_cycles = Vec::new();
-    for (steps, instruction) in instructions.clone().cycle().enumerate()  {
+    for (steps, instruction) in instructions.clone().cycle().enumerate() {
         for node in current_nodes.iter_mut() {
             let (left, right) = nodes[*node];
             *node = match instruction {
@@ -81,11 +88,16 @@ fn lcm(numbers: Vec<usize>) -> usize {
             return temp[0];
         }
 
-        match temp.iter().enumerate().min_by(|(_, a), (_, b)| a.cmp(b)).map(|(index, _)| index) {
+        match temp
+            .iter()
+            .enumerate()
+            .min_by(|(_, a), (_, b)| a.cmp(b))
+            .map(|(index, _)| index)
+        {
             Some(idx) => {
                 temp[idx] += numbers[idx];
-            },
-            None => panic!("Not possible")
+            }
+            None => panic!("Not possible"),
         }
     }
 }
