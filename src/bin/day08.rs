@@ -1,5 +1,4 @@
 use std::collections::HashMap;
-use std::hash::Hash;
 
 pub fn main() {
     let mut input = include_str!("../../input/day08.txt").lines();
