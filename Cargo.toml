@@ -10,6 +10,9 @@ edition = "2021"
 [dev-dependencies]
 criterion = "0.5"
 
+[profile.release]
+debug = true
+
 [[bench]]
 name = "day01"
 harness = false
@@ -46,3 +49,10 @@ harness = false
 name = "day09"
 harness = false
 
+[[bench]]
+name = "day10"
+harness = false
+
+[[bench]]
+name = "day11"
+harness = false
